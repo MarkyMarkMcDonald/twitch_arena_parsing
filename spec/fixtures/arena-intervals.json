@@ -1,0 +1,28 @@
+{
+  "file_name": "605443292-0.flv",
+  "games": [{
+    "enter_arena_load_screen": "8:38",
+    "game_start": "9:21",
+    "game_end": "11:11"
+  }, {
+    "enter_arena_load_screen": "12:21",
+    "game_start": "13:07",
+    "game_end": "14:58"
+  }, {
+    "enter_arena_load_screen": "15:25",
+    "game_start": "16:13",
+    "game_end": "17:12"
+  }, {
+    "enter_arena_load_screen": "19:09",
+    "game_start": "19:58",
+    "game_end": "22:22"
+  }, {
+    "enter_arena_load_screen": "24:25",
+    "game_start": "25:14",
+    "game_end": "26:36"
+  }, {
+    "enter_arena_load_screen": "26:49",
+    "game_start": "27:37"
+  }]
+}
+
