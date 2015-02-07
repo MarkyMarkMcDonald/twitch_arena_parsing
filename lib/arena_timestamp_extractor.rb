@@ -12,7 +12,7 @@ class ArenaTimestampExtractor
   end
 
   def extract
-    #VideoFrameExtractor.new(video_file.path).execute!
+    VideoFrameExtractor.new(video_file.path).execute!
     descriptor_pairings = `find /tmp/ -name 'screenshot-*.png' -type f -print0 -maxdepth 1 | xargs -0 -n1 -P4 ./find_obj.rb warcraft_logo.png | pv -l | tee /tmp/rspec.log`
 
     descriptor_pairings = descriptor_pairings.split("\n").map do |line|
