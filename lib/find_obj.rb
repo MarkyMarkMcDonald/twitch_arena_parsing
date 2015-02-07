@@ -91,24 +91,19 @@ class FindObj
     dst_corners
   end
 
-  def execute!(object_filename, scene_filename)
-    object, image = nil, nil
-    begin
-      object = IplImage.load(object_filename, CV_LOAD_IMAGE_GRAYSCALE)
-      image = IplImage.load(scene_filename, CV_LOAD_IMAGE_GRAYSCALE)
-    rescue
-      puts "Can not load #{object_filename} and/or #{scene_filename}"
-      puts "Usage: ruby #{__FILE__} [<object_filename> <scene_filename>]"
-      exit
-    end
+  CV_SURF_PARAMS = CvSURFParams.new(1500)
 
-    param = CvSURFParams.new(1500)
+  def initialize(object_filename)
+    object = IplImage.load(object_filename, CV_LOAD_IMAGE_GRAYSCALE)
+    @object_keypoints, @object_descriptors = object.extract_surf(CV_SURF_PARAMS)
+  end
 
-    object_keypoints, object_descriptors = nil, nil
-    image_keypoints, image_descriptors = nil, nil
-    object_keypoints, object_descriptors = object.extract_surf(param)
-    image_keypoints, image_descriptors = image.extract_surf(param)
-    ptpairs = find_pairs(object_keypoints, object_descriptors, image_keypoints, image_descriptors)
+  def execute!(scene_filename)
+    image = IplImage.load(scene_filename, CV_LOAD_IMAGE_GRAYSCALE)
+
+    image_keypoints, image_descriptors = image.extract_surf(CV_SURF_PARAMS)
+
+    ptpairs = find_pairs(@object_keypoints, @object_descriptors, image_keypoints, image_descriptors)
     ptpairs.size
   end
 end

@@ -14,9 +14,10 @@ class ArenaTimestampExtractor
 
   def extract
     VideoFrameExtractor.new(video_file.path).execute!
+    find_obj = FindObj.new("warcraft_logo.png")
     Dir["/tmp/screenshot*.png"].map do |scene_filename|
       puts "processing #{scene_filename}" if $DEBUG
-      descriptor_count = FindObj.new.execute!("warcraft_logo.png", scene_filename)
+      descriptor_count = find_obj.execute!(scene_filename)
       timestamp = scene_filename[/\d+/].to_i
       DescriptorPairing.new(descriptor_count, timestamp)
     end.select do |pair|
