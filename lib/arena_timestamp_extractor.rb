@@ -1,3 +1,4 @@
+require_relative 'find_obj'
 require_relative 'video_frame_extractor'
 require_relative 'descriptor_pairing'
 
@@ -13,10 +14,11 @@ class ArenaTimestampExtractor
 
   def extract
     VideoFrameExtractor.new(video_file.path).execute!
-    descriptor_pairings = `find /tmp/ -name 'screenshot-*.png' -type f -print0 -maxdepth 1 | xargs -0 -n1 -P4 ./find_obj.rb warcraft_logo.png | pv -l | tee /tmp/rspec.log`
-
-    descriptor_pairings = descriptor_pairings.split("\n").map do |line|
-      DescriptorPairing.from_line(line).tap {|x| p x }
+    Dir["/tmp/screenshot*.png"].map do |scene_filename|
+      puts "processing #{scene_filename}" if $DEBUG
+      descriptor_count = FindObj.new.execute!("warcraft_logo.png", scene_filename)
+      timestamp = scene_filename[/\d+/].to_i
+      DescriptorPairing.new(descriptor_count, timestamp)
     end.select do |pair|
       pair.descriptor_count > 100
     end.map(&:timestamp).sort
