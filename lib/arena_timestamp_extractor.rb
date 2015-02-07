@@ -1,3 +1,6 @@
+require 'parallel'
+require 'ruby-progressbar'
+
 require_relative 'find_obj'
 require_relative 'video_frame_extractor'
 require_relative 'descriptor_pairing'
@@ -14,8 +17,7 @@ class ArenaTimestampExtractor
 
   def extract
     find_obj = FindObj.new("warcraft_logo.png")
-     VideoFrameExtractor.new(video_file.path).frames.map do |frame|
-      puts "processing #{frame.filename}" if ENV['TWITCH_DEBUG']
+    Parallel.map(VideoFrameExtractor.new(video_file.path).frames, in_threads: 16, progress: 'Reticulating Splines') do |frame|
       descriptor_count = find_obj.execute!(frame.filename)
       DescriptorPairing.new(descriptor_count, frame.timestamp)
     end.select do |pair|
