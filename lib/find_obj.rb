@@ -6,7 +6,7 @@ require 'benchmark'
 class FindObj
   include OpenCV
 
-  CV_SURF_PARAMS = CvSURFParams.new(1500)
+  CV_SURF_PARAMS = CvSURFParams.new(10000)
 
   def initialize(object_filename)
     object = IplImage.load(object_filename, CV_LOAD_IMAGE_GRAYSCALE)
