@@ -1,0 +1,9 @@
+#! /usr/bin/env ruby
+
+require 'json'
+
+require_relative '../lib/arena_game_extractor.rb'
+require_relative '../lib/arena_timestamp_extractor.rb'
+
+timestamps = ArenaTimestampExtractor.new(ARGF).extract
+puts JSON.pretty_generate(ArenaGameExtractor.new(timestamps).games.map(&:to_h))
