@@ -1,9 +1,9 @@
-require_relative '../lib/arena_timestamp_extractor'
+require_relative '../../lib/arena_timestamp_extractor'
 
 describe ArenaTimestampExtractor do
   describe '.extract' do
     let :arena_timestamp_extractor do
-      ArenaTimestampExtractor.new(File.new(File.join(__dir__, 'fixtures', 'short-load-screen-clip.mp4')))
+      ArenaTimestampExtractor.new(File.new(File.join(__dir__, '..', 'fixtures', 'short-load-screen-clip.mp4')))
     end
 
     it 'returns event timestamps' do

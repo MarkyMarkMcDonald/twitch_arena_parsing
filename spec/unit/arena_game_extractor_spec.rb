@@ -1,4 +1,4 @@
-require_relative '../lib/arena_game_extractor'
+require_relative '../../lib/arena_game_extractor'
 
 describe ArenaGameExtractor do
 
